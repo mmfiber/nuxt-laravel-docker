@@ -20,6 +20,9 @@ RUN apt-get update \
     zip \
     bcmath
 
-COPY ./php.ini /usr/local/etc/php/php.ini
+COPY ./infra/php/php.ini /usr/local/etc/php/php.ini
 
 WORKDIR /app
+
+COPY ./app .
+RUN composer install

@@ -1,0 +1,10 @@
+{
+    "dockerComposeFile": ["../docker-compose.yml"],
+    "service": "api",
+    "extensions": [
+        "dbaeumer.vscode-eslint"
+    ],
+    "postCreateCommand": "composer install",
+    "workspaceFolder": "/app",
+    "shutdownAction": "stopCompose"
+}

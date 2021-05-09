@@ -89,5 +89,10 @@ export default {
     Logo,
     VuetifyLogo,
   },
+
+  async mounted() {
+    const res = await this.$axios.$get("http://localhost:10080/api/tests")
+    console.log({res})
+  }
 }
 </script>

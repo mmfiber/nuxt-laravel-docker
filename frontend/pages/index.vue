@@ -73,7 +73,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
+          <v-btn color="primary" nuxt @click="login"> login </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
@@ -84,10 +84,40 @@
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
+import axios from "axios";
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:10080";
 export default {
   components: {
     Logo,
     VuetifyLogo,
   },
-}
+  mounted() {
+    axios
+            .get("/api/user")
+            .then(res => {
+              console.log(res)
+            })
+  },
+  methods: {
+    login() {
+      axios.get("/sanctum/csrf-cookie").then(response => {
+        console.log(response); //This is one success but it did set cookie in application cookie
+        axios
+          .post("/api/login", {
+            email: "john@example.com",
+            password: "password"
+          })
+          .then(res => {
+            console.log(res);
+            axios
+            .get("/api/user")
+            .then(res => {
+              console.log(res)
+            })
+          }); // this one failed with 419 csrf token mismatch
+      });
+    }
+  }
+};
 </script>
